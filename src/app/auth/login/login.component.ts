@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   public loginForm: FormGroup;
+  private apiUrl = 'http://localhost:3000/api/v1/customers/login';
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router, private fb: FormBuilder, private http: HttpClient) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      remember: [false]
     });
   }
 
@@ -23,8 +24,29 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    // Implement your form submission logic here
-    // You can access form values using this.loginForm.value
-    console.log('Form submitted:', this.loginForm.value);
+    if (this.loginForm.valid) {
+      // If the form is valid, proceed with HTTP POST request
+      const loginData = this.loginForm.value;
+
+      // Make HTTP POST request
+      this.http.post(this.apiUrl, loginData).subscribe(
+        (response) => {
+          // Handle successful response
+          console.log('Login successful:', response);
+
+          // Optionally, you can navigate to another page on success
+          this.router.navigate(['/admin']);
+        },
+        (error) => {
+          // Handle error
+          console.error('Error during login:', error);
+
+          // Optionally, you can show an error message to the user
+        }
+      );
+    } else {
+      // Handle form validation errors
+      console.log('Form is invalid. Please check the fields.');
+    }
   }
 }

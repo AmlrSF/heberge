@@ -8,42 +8,27 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthUserService {
 
-  private apiUrl = "http://localhost:3000/api/v1/customers/"; 
+ 
+  private apiUrl = 'http://localhost:3000/api/v1/customers/';
+
   private tokenKey = 'auth-token';
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { email: string, password: string }): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        map((response: { token: string; }) => {
-          if (response && response.token) {
-            localStorage.setItem(this.tokenKey, response.token);
-            return true;
-          } else {
-            return false;
-          }
-        }),
-        catchError((error: any) => {
-          console.error('Login failed', error);
-          return of(false);
-        })
-      );
+
+  public login(account : any): Observable<any> {
+    return this.http.post(`${this.apiUrl}login`, JSON.stringify(account));
   }
 
-  register(user: any): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/register`, user)
-      .pipe(
-        map((response: { success: boolean; }) => {
-          // Check the response from the server and return true if registration is successful
-          return response.success === true;
-        }),
-        catchError((error: any) => {
-          console.error('Registration failed', error);
-          return of(false);
-        })
-      );
+  
+  public register(account : any): Observable<any> {
+    return this.http.post(`${this.apiUrl}register`, JSON.stringify(account));
   }
+
+  public profile(token:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}profile`,JSON.stringify(token));
+  }
+
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem(this.tokenKey);
