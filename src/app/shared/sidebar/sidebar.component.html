@@ -1,0 +1,47 @@
+<!-- sidebar.component.html -->
+<section id="sidebar" [ngClass]="functionsS.status ? 'hide' : ''">
+    <a class="brand">
+      <i class="bx bxs-group fa-solid fa-house"></i>
+      <span class="text">Carthage Solutions</span>
+    </a>
+    <ul class="side-menu top">
+      <li [class.active]="isActive('/admin/home')">
+        <a (click)="navigateTo('/admin/home')">
+          <i class="bx bxs-group fa-solid fa-house"></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li [class.active]="isActive('/admin/clients')">
+        <a (click)="navigateTo('/admin/clients')">
+          <i class="bx bxs-group fa-solid fa-user"></i>
+          <span class="text">Clients</span>
+        </a>
+      </li>
+      
+      <li [class.active]="isActive('/domains')">
+        <a (click)="navigateTo('/domains')">
+          <i class="bx bxs-group fa-solid fa-globe"></i>
+          <span class="text">Domains</span>
+        </a>
+      </li>
+      <li [class.active]="isActive('/profile')">
+        <a (click)="navigateTo('/profile')">
+          <i class="bx bxs-group fa-solid fa-pen-to-square"></i>
+          <span class="text">Profile</span>
+        </a>
+      </li>
+      <li [class.active]="isActive('/settings')">
+        <a (click)="navigateTo('/settings')">
+          <i class="bx bxs-group fa-solid fa-gears"></i>
+          <span class="text">Settings</span>
+        </a>
+      </li>
+      <li [class.active]="isActive('/logout')">
+        <a class="logout" (click)="navigateTo('/logout')">
+          <i class="bx bxs-group fa-solid fa-right-from-bracket"></i>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+  
