@@ -5,6 +5,11 @@ import { ClientsRoutingModule } from './clients-routing.module';
 import { ListClientsComponent } from './list-clients/list-clients.component';
 import { AddClientComponent } from './add-client/add-client.component';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -15,7 +20,12 @@ import { ClientDetailComponent } from './client-detail/client-detail.component';
   ],
   imports: [
     CommonModule,
-    ClientsRoutingModule
+    ClientsRoutingModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule
   ]
 })
 export class ClientsModule { }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { AuthUserService } from 'src/app/services/auth/auth-user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   public loginForm: FormGroup;
   private apiUrl = 'http://localhost:3000/api/v1/customers/login';
 
@@ -18,6 +18,34 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+  }
+  ngOnInit(): void {
+
+     
+    let token = {
+      token : this.auth.getToken()
+    }
+
+    console.log(token);
+    
+    
+
+    try {
+      this.http.post(`http://localhost:3000/api/v1/customers/profile`,token).subscribe(
+        (res:any)=>{
+        
+          if(res.success ==  true) {
+            this.router.navigate(["admin"])
+          }
+          
+
+        },(err:any)=>{
+          console.log(err);
+        }
+      )
+    } catch (error) {
+      
+    }
   }
 
   navigateToRegister() {

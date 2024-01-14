@@ -12,7 +12,7 @@ export class AuthUserService {
  
   private apiUrl = 'http://localhost:3000/api/v1/customers/';
 
-  private tokenKey = 'auth-token';
+  private tokenKey = 'token';
 
   constructor(private http: HttpClient,private router : Router) {}
 
@@ -26,8 +26,8 @@ export class AuthUserService {
     return this.http.post(`${this.apiUrl}register`, JSON.stringify(account));
   }
 
-  public profile(): Observable<any> {
-    return this.http.post(`${this.apiUrl}profile`,JSON.stringify(this.getToken()));
+  public profile(token:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}profile`,JSON.stringify(token));
   }
 
 

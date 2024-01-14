@@ -39,7 +39,7 @@
       <li [class.active]="isActive('/logout')">
         <a class="logout" (click)="navigateTo('/logout')">
           <i class="bx bxs-group fa-solid fa-right-from-bracket"></i>
-          <span class="text">Logout</span>
+          <span (click)="logout()" class="text">Logout</span>
         </a>
       </li>
     </ul>

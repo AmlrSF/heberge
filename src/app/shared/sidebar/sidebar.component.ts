@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthUserService } from 'src/app/services/auth/auth-user.service';
 import { FuncServicesService } from 'src/app/services/func-services.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class SidebarComponent {
 
   constructor(
     public functionsS: FuncServicesService,
-    private router: Router
+    private router: Router,
+    private auth : AuthUserService
   ) {
 
     this.router.events.subscribe((event) => {
@@ -38,4 +40,9 @@ export class SidebarComponent {
   isActive(path: string): boolean {
     return this.router.url.includes(path);
   }
+
+  public logout(){
+    this.auth.logout();
+  }
+
 }

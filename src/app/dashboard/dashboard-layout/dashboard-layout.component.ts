@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthUserService } from 'src/app/services/auth/auth-user.service';
@@ -13,13 +14,37 @@ export class DashboardLayoutComponent implements OnInit {
   constructor(
     public functionsS: FuncServicesService,
     public auth : AuthUserService,
-    private router : Router
+    private router : Router,
+    private http : HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.auth.profile().subscribe((res)=>{
-      this.router.navigate(["/Login"])     
-    })
+    
+    let token = {
+      token : this.auth.getToken()
+    }
+
+    console.log(token);
+    
+    
+    try {
+      this.http.post(`http://localhost:3000/api/v1/customers/profile`,token).subscribe(
+        (res:any)=>{
+        
+          
+          if(!res.success) {
+            this.router.navigate(["Login"])
+          }
+          
+
+        },(err:any)=>{
+          console.log(err);
+        }
+      )
+    } catch (error) {
+      
+    }
+
   }
 
   getContentStyles() {
