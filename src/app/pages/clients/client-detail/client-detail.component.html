@@ -1,1 +1,55 @@
-<p>client-detail works!</p>
+<main>
+    <div class="head-title border-b-[1.5px] pb-8 border-[rgba(0,0,0,0.2)]">
+        <div class="left">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>/</li>
+                <li>
+                    <a  >Clients</a>
+                </li>
+                <li>/</li>
+                <li>
+                    <a class="active" >{{client.name}} details</a>
+                </li>
+            </ul>
+        </div>
+        <a routerLink="/admin/clients" class="btn-download">
+            <i class='bx bxs-cloud-download fa-solid fa-list '></i>
+            <span class="text">List Client</span>
+        </a>
+    </div>
+
+    <div>
+        <ul class="w-full  mt-10 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg 0">
+          <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg ">
+            Name<i class="fa-solid fa-greater-than ml-10 mr-10"></i>         {{ client.name }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            Email<i class="fa-solid fa-greater-than ml-10 mr-10"></i>        {{ client.email }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            Phone<i class="fa-solid fa-greater-than ml-10 mr-10"></i>        {{ client.phone }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            Address<i class="fa-solid fa-greater-than ml-10 mr-10"></i>      {{ client.address }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            City<i class="fa-solid fa-greater-than ml-10 mr-10"></i>        {{ client.city }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            State<i class="fa-solid fa-greater-than ml-10 mr-10"></i>       {{ client.state }}
+          </li>
+          <li class="w-full px-4 py-4 border-b border-gray-200 ">
+            Zip<i class="fa-solid fa-greater-than ml-10 mr-10"></i>        {{ client.zip }}
+          </li>
+          <li class="w-full px-4 py-4 rounded-b-lg">
+            Country<i class="fa-solid fa-greater-than ml-10 mr-10"></i>    {{ client.country }}
+          </li>
+        </ul>
+      </div>
+      
+
+</main>
