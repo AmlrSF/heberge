@@ -148,11 +148,12 @@ export class ListDomainsComponent implements OnInit {
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    console.log(filterValue);
+    
     this.filtereddomains = this.domains.filter(domain =>
       domain.client.name.toLowerCase().includes(filterValue) ||
       domain.domainName.toLowerCase().includes(filterValue) ||
       domain.hostOvhOffer.toLowerCase().includes(filterValue) ||
-      domain.status.toLowerCase().includes(filterValue) ||
       this.formatReadableDate(domain.startDate).toLowerCase().includes(filterValue) ||
       this.formatReadableDate(domain.endDate).toLowerCase().includes(filterValue) ||
       domain.purchasePrice.toString().includes(filterValue) ||
