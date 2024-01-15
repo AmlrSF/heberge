@@ -4,8 +4,9 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 
 const routes: Routes = [
   { path : "", component : DashboardLayoutComponent ,children:[
-    { path : 'home',loadChildren :()=>import("../pages/overview/overview.module").then(m=>m.OverviewModule) },
-    { path : 'clients',loadChildren : ()=>import("../pages/clients/clients.module").then(m=>m.ClientsModule) },
+    { path : 'home',    loadChildren :()=>import("../pages/overview/overview.module").then(m=>m.OverviewModule) },
+    { path : 'clients', loadChildren : ()=>import("../pages/clients/clients.module").then(m=>m.ClientsModule) },
+    { path : 'domains', loadChildren: ()=>import("../pages/domains/domains.module").then(m=>m.DomainsModule) },
     { path : "", redirectTo: "/admin/home", pathMatch:"full" }
   ]}
 ];
