@@ -5,6 +5,7 @@ import { DomainsRoutingModule } from './domains-routing.module';
 import { ListDomainsComponent } from './list-domains/list-domains.component';
 import { AddDomainComponent } from './add-domain/add-domain.component';
 import { DomainDetailComponent } from './domain-detail/domain-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DomainDetailComponent } from './domain-detail/domain-detail.component';
   ],
   imports: [
     CommonModule,
-    DomainsRoutingModule
+    DomainsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class DomainsModule { }
