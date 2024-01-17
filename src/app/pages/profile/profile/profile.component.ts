@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
             this.router.navigate(["Login"]);
           }
 
-          console.log(res);
+          //console.log(res);
 
           this.initializeForm(res.customer);
 
@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
       bio: data?.bio || '',
     });
 
-    console.log(data.profileImage);
+    //console.log(data.profileImage);
     
 
     this.imageUrl = data.profileImage;
@@ -83,12 +83,12 @@ export class ProfileComponent implements OnInit {
     this.setLoading = true;
     this.userForm.value['profileImage'] = this.imageUrl;
 
-    console.log(this.userForm.value);
+    //console.log(this.userForm.value);
     
     try {
       this.http.put(`${this.apiUrl}${this.id}`,this.userForm.value).subscribe(
         (res:any)=>{
-          console.log(res);
+          //console.log(res);
           if(res.success){
             this.setLoading = false;
           }
