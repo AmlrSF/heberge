@@ -24,7 +24,7 @@ export class DashboardLayoutComponent implements OnInit {
       token : this.auth.getToken()
     }
 
-    console.log(token);
+    //console.log(token);
     
     
     try {

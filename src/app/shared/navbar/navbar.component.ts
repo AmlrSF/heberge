@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
       token: this.auth.getToken()
     };
 
-    console.log(token);
+    //console.log(token);
 
     try {
       this.http.post(`http://localhost:3000/api/v1/customers/profile`, token).subscribe(

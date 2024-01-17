@@ -3,14 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
-
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { DomainsService } from 'src/app/services/domain/domain.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-list-domains',
   templateUrl: './list-domains.component.html',
   styleUrls: ['./list-domains.component.css']
 })
+
 export class ListDomainsComponent implements OnInit {
 
 
@@ -19,11 +21,88 @@ export class ListDomainsComponent implements OnInit {
   private id: string = "";
   public domains: any[] = [];
   public filtereddomains: any[] = [];
-  constructor( private clientS: ClientsService ,private domainS: DomainsService, private router: Router, private http: HttpClient, private fb: FormBuilder) { };
+  constructor(
+    private clientS: ClientsService,
+    private domainS: DomainsService,
+    private router: Router,
+    private http: HttpClient,
+    private fb: FormBuilder
+  ) {
+    // interval(5000).subscribe(() => {
+    //   this.checkDomainsNearEndDate();
+    //   console.log("hello");
+
+    // });
+  };
+
+  checkDomainsNearEndDate(): void {
+    this.domainS.getAllDomains().subscribe((domains: any) => {
+      const currentDate = new Date();
+
+      console.log(domains);
+
+      domains.data.forEach((domain: any) => {
+        const endDate = new Date(domain.endDate);
+        const daysUntilEnd = Math.floor((endDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
+
+        // Assuming you want to send an alert when there is one month left or less (you can adjust this threshold)
+        if (daysUntilEnd <= 30) {
+          this.sendAlertToClient(domain.client.email, domain.domainName, domain.client.name);
+        }
+
+        console.log(domain.client.email, daysUntilEnd);
+
+      });
+    });
+  }
+
+  sendAlertToClient(clientEmail: string, domainName: string, name:String): void {
+    // You can use your preferred method to send an alert, such as sending an email
+
+    // For simplicity, let's assume you have a backend API to send emails
+
+
+    const emailContent = `
+        Dear ${name},
+
+        I trust this message finds you well. We wanted to bring to your attention an important matter regarding your online presence.
+
+        Subject: Urgent: Domain Expiry Alert
+
+        We wish to inform you that the domain "${domainName}" is set to expire in one month. To ensure uninterrupted service and maintain your online identity, we recommend taking prompt action to renew your domain.
+
+        Please consider the following steps:
+        1. Review the expiration date of your domain "${domainName}".
+        2. Initiate the renewal process well in advance to avoid any potential disruptions.
+        3. Verify and update your contact information to receive timely notifications about your domain status.
+
+        If you have any questions or require assistance with the renewal process, feel free to reach out to our support team at support@carthaeHosting.com.
+
+        Thank you for choosing our services. We appreciate your attention to this matter and value your continued partnership.
+
+        Best regards,
+        Carthage Hosting
+        `;
+
+    this.http.post('http://localhost:3000/api/v1/send-email', {
+      to: clientEmail,
+      subject: 'Urgent: Domain Expiry Alert',
+      message: emailContent,
+    }).subscribe(
+      (res: any) => {
+        console.log('Email sent successfully', res);
+      },
+      (error: any) => {
+        console.error('Error sending email', error);
+      });
+
+  }
+
+
   public client: any[] = [];
-  
+
   ngOnInit(): void {
-    this.clientS.getAllClients().subscribe((res:any)=>{
+    this.clientS.getAllClients().subscribe((res: any) => {
       this.client = res.clients;
     })
 
@@ -44,14 +123,18 @@ export class ListDomainsComponent implements OnInit {
   }
 
 
+
+
+
+
   getDomains(): void {
     this.http.get(this.baseUrl).subscribe(
       (res: any) => {
         console.log(res);
-        
+
         this.domains = res.data;
         this.filtereddomains = [...this.domains];
-        console.log('domains:', this.domains);
+        // console.log('domains:', this.domains);
       },
       (error: any) => {
         console.error('Error fetching domains:', error);
@@ -69,7 +152,7 @@ export class ListDomainsComponent implements OnInit {
 
   }
 
-  
+
 
   viewdomain(domain: any): void {
     console.log('View domain:', domain);
@@ -114,23 +197,23 @@ export class ListDomainsComponent implements OnInit {
   }
 
   submitForm() {
-    if(this.addDomain.valid){
-      
+    if (this.addDomain.valid) {
+
       const formData = { ...this.addDomain.value }; // Convert FormGroup to a plain object
-  
+
       // Send formData to the server
       this.http.put(`${this.baseUrl}/Domain/${this.id}`, formData).subscribe(
         (res: any) => {
-          if(res.success){
+          if (res.success) {
             this.getDomains();
             this.closeModel();
           }
         }
       );
-      
-    }else{
+
+    } else {
       console.log("not valid");
-      
+
     }
   }
 
@@ -149,7 +232,7 @@ export class ListDomainsComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
     console.log(filterValue);
-    
+
     this.filtereddomains = this.domains.filter(domain =>
       domain.client.name.toLowerCase().includes(filterValue) ||
       domain.domainName.toLowerCase().includes(filterValue) ||
@@ -160,6 +243,6 @@ export class ListDomainsComponent implements OnInit {
       domain.buyingPrice.toString().includes(filterValue)
     );
   }
-  
+
 
 }

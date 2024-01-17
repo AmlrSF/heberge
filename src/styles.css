@@ -43,6 +43,7 @@ body {
   background: var(--grey);
   /* overflow-x: hidden; */
 }
+
 /* SIDEBAR */
 #sidebar {
   position: fixed;
@@ -57,9 +58,11 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
 }
+
 #sidebar::--webkit-scrollbar {
   display: none;
 }
+
 #sidebar.hide {
   width: 60px;
 }
@@ -498,6 +501,7 @@ body {
   }
 }
 @media screen and (max-width: 576px) {
+
   #content nav form .form-input input {
     display: none;
   }
