@@ -4,9 +4,15 @@ import { ParametersComponent } from './parameters/parameters.component';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ClientsService } from 'src/app/services/clients/clients.service';
+import { AddDbComponent } from './add-db/add-db.component';
+import { AddFtpComponent } from './add-ftp/add-ftp.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 const routes: Routes = [ 
-  { path: "", component:ParametersComponent }
+  { path: "all", component:ParametersComponent },
+  { path: "add-db", component:AddDbComponent },
+  { path: "add-FTPclient", component:AddFtpComponent },
+  { path: "add-Admin", component:AddAdminComponent },
 ];
 
 @NgModule({

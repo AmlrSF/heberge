@@ -3,6 +3,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AuthUserService } from 'src/app/services/auth/auth-user.service';
 import { FuncServicesService } from 'src/app/services/func-services.service';
 
+import { MatMenuTrigger } from '@angular/material/menu';
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -16,7 +19,7 @@ export class SidebarComponent {
   constructor(
     public functionsS: FuncServicesService,
     private router: Router,
-    private auth : AuthUserService
+    private auth: AuthUserService
   ) {
 
     this.router.events.subscribe((event) => {
@@ -30,7 +33,15 @@ export class SidebarComponent {
 
   }
 
-  
+ // Add this to your component class
+isDropdownOpen: boolean = false;
+
+toggleDropdown() {
+  this.isDropdownOpen = !this.isDropdownOpen;
+}
+
+
+
   public navigateTo(item: string) {
 
     this.router.navigate([item]);
@@ -41,8 +52,10 @@ export class SidebarComponent {
     return this.router.url.includes(path);
   }
 
-  public logout(){
+  public logout() {
     this.auth.logout();
   }
+
+ 
 
 }

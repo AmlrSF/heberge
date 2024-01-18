@@ -1,41 +1,38 @@
 <!-- sidebar.component.html -->
 <section id="sidebar" [ngClass]="functionsS.status ? 'hide' : ''">
-    <a class="brand ">
-      <i class="bx bxs-group fa-solid fa-house"></i>
-      <span class="text">Carthage Solutions</span>
-    </a>
-    <ul class="side-menu top">
-      <li [class.active]="isActive('/admin/home')">
-        <a (click)="navigateTo('/admin/home')">
-          <i class="bx bxs-group fa-solid fa-house"></i>
-          <span class="text">Dashboard</span>
-        </a>
-      </li>
-      <li [class.active]="isActive('/admin/clients')">
-        <a (click)="navigateTo('/admin/clients')">
-          <i class="bx bxs-group fa-solid fa-user"></i>
-          <span class="text">Clients</span>
-        </a>
-      </li>
-      
-      <li [class.active]="isActive('/admin/domains')">
-        <a (click)="navigateTo('/admin/domains')">
-          <i class="bx bxs-group fa-solid fa-globe"></i>
-          <span class="text">Domains</span>
-        </a>
-      </li>
-      <li [class.active]="isActive('/admin/profile')">
-        <a (click)="navigateTo('/admin/profile')">
-          <i class="bx bxs-group fa-solid fa-pen-to-square"></i>
-          <span class="text">Profile</span>
-        </a>
-      </li>
-      <li [class.active]="isActive('/admin/parameters')">
-        <a (click)="navigateTo('/admin/parameters')">
-          <i class="bx bxs-group  fa-solid fa-gear"></i>
-          <span class="text">parameters</span>
-        </a>
-      </li>
-    </ul>
-  </section>
-  
+  <a class="brand ">
+    <i class="bx bxs-group fa-solid fa-house"></i>
+    <span class="text">Carthage Solutions</span>
+  </a>
+  <ul class="side-menu top">
+    <li [class.active]="isActive('/admin/home')">
+      <a (click)="navigateTo('/admin/home')">
+        <i class="bx bxs-group fa-solid fa-house"></i>
+        <span class="text">Dashboard</span>
+      </a>
+    </li>
+    <li [class.active]="isActive('/admin/clients')">
+      <a (click)="navigateTo('/admin/clients')">
+        <i class="bx bxs-group fa-solid fa-user"></i>
+        <span class="text">Clients</span>
+      </a>
+    </li>
+
+    <!-- Add Database Form -->
+    <li [class.active]="isActive('/admin/parameters')" class="dropdown" [class.open]="isDropdownOpen">
+      <a (click)="toggleDropdown()" class="dropdown-toggle">
+        <i class="bx bxs-group fa-solid fa-gear"></i>
+        <span class="text">parameters</span>
+      </a>
+      <!-- Dropdown Menu -->
+      <ul class="dropdown-menu">
+        <li><a routerLink="/admin/parameters/all">All</a></li>
+        <li><a routerLink="/admin/parameters/add-db">Add DB</a></li>
+        <li><a routerLink="/admin/parameters/add-FTPclient">Add FTP Client</a></li>
+        <li><a routerLink="/admin/parameters/add-Admin">Add Admin</a></li>
+        <!-- Add other menu items as needed -->
+      </ul>
+    </li>
+
+  </ul>
+</section>
