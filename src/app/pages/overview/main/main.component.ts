@@ -56,7 +56,6 @@ export class MainComponent implements OnInit {
           return item.buyingPrice - item.purchasePrice;
         }).reduce((prev, item) => prev + item);
 
-        
       },
       (error: any) => {
         console.error('Error fetching domains:', error);
@@ -74,4 +73,5 @@ export class MainComponent implements OnInit {
       }
     );
   }
+  
 }
