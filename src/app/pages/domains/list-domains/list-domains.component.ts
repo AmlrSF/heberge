@@ -56,7 +56,7 @@ export class ListDomainsComponent implements OnInit {
     });
   }
 
-  sendAlertToClient(clientEmail: string, domainName: string, name:String): void {
+  sendAlertToClient(clientEmail: string, domainName: string, name: String): void {
     // You can use your preferred method to send an alert, such as sending an email
 
     // For simplicity, let's assume you have a backend API to send emails
@@ -143,15 +143,12 @@ export class ListDomainsComponent implements OnInit {
   }
 
   public formatReadableDate(dateString: any) {
-
-    const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
 
     const date = new Date(dateString);
 
     return date.toLocaleString('en-US', options);
-
   }
-
 
 
   viewdomain(domain: any): void {

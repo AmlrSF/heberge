@@ -30,16 +30,10 @@
           <span class="text">Profile</span>
         </a>
       </li>
-      <li [class.active]="isActive('/admin/settings')">
-        <a (click)="navigateTo('/admin/settings')">
-          <i class="bx bxs-group fa-solid fa-gears"></i>
-          <span class="text">Settings</span>
-        </a>
-      </li>
-      <li [class.active]="isActive('/logout')">
-        <a class="logout" (click)="navigateTo('/logout')">
-          <i class="bx bxs-group fa-solid fa-right-from-bracket"></i>
-          <span (click)="logout()" class="text">Logout</span>
+      <li [class.active]="isActive('/admin/parameters')">
+        <a (click)="navigateTo('/admin/parameters')">
+          <i class="bx bxs-group  fa-solid fa-gear"></i>
+          <span class="text">parameters</span>
         </a>
       </li>
     </ul>

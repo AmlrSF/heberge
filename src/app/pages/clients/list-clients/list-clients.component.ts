@@ -62,16 +62,14 @@ export class ListClientsComponent implements OnInit {
       }
     );
   }
-
-  public  formatReadableDate(dateString:any) {
-
-    const options:any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-
+  public formatReadableDate(dateString: any) {
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
+  
     const date = new Date(dateString);
-
+  
     return date.toLocaleString('en-US', options);
-
   }
+  
 
   viewClient(client: any): void {
     console.log('View Client:', client);
