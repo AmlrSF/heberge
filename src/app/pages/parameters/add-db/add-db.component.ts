@@ -32,13 +32,13 @@ export class AddDbComponent implements OnInit {
   getDomains(): void {
     this.http.get(this.baseUrl).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.domains = res.data; // Assuming res is an array of domains
 
         // Filter domains based on domain and status properties
         this.domains = this.domains.filter((domain) => domain.domain && domain.status);
-        console.log(this.domains);
+        // console.log(this.domains);
 
       },
       (error: any) => {
@@ -56,6 +56,7 @@ export class AddDbComponent implements OnInit {
       this.http.post(this.apiUrl, this.addDb.value).subscribe(
         (res: any) => {
           console.log('Success:', res);
+          this.addDb.reset();
         },
         (err: any) => {
           console.error('Error:', err);
