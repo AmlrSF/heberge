@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: "add-db", component:AddDbComponent },
   { path: "add-FTPclient", component:AddFtpComponent },
   { path: "add-Admin", component:AddAdminComponent },
+  { path : "", redirectTo:"/all" , pathMatch:"full" }
 ];
 
 @NgModule({

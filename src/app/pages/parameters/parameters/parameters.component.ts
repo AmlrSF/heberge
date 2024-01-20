@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients/clients.service';
+import { CmsService } from 'src/app/services/cms/cms.service';
+import { DbService } from 'src/app/services/db/db.service';
 import { DomainsService } from 'src/app/services/domain/domain.service';
+import { FtpService } from 'src/app/services/ftp/ftp.service';
 
 @Component({
   selector: 'app-parameters',
@@ -14,8 +17,8 @@ export class ParametersComponent implements OnInit {
   private baseUrl = 'http://localhost:3000/api/v1/domains';
   public addDomain !: FormGroup;
 
-  public addDbForm !:FormGroup;
-  public addFtpForm !:FormGroup;
+  public addDbForm !: FormGroup;
+  public addFtpForm !: FormGroup;
 
 
 
@@ -29,7 +32,10 @@ export class ParametersComponent implements OnInit {
     private domainS: DomainsService,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private db: DbService,
+    private cms: CmsService,
+    private ftp: FtpService
   ) {
 
   }
@@ -39,6 +45,10 @@ export class ParametersComponent implements OnInit {
     this.clientS.getAllClients().subscribe((res: any) => {
       this.client = res.clients;
     })
+
+    // this.getDbs();
+    // this.getadmin();
+    // this.getftps();
 
     this.addDomain = this.fb.group({
       client: ['', Validators.required],
@@ -66,7 +76,7 @@ export class ParametersComponent implements OnInit {
 
         // Filter domains based on domain and status properties
         this.domains = this.domains.filter((domain) => domain.domain && domain.status);
-        console.log(this.domains);
+        // console.log(this.domains);
 
         this.filtereddomains = [...this.domains];
         // console.log('domains:', this.domains);
@@ -75,6 +85,36 @@ export class ParametersComponent implements OnInit {
         console.error('Error fetching domains:', error);
       }
     );
+  }
+
+  getDbs() {
+    this.db.getAllDBs().subscribe(
+      (res: any) => {
+        console.log(res);
+        
+      }, (err) => {
+
+      })
+  }
+
+  getadmin() {
+    this.cms.getAllCMSs().subscribe(
+      (res: any) => {
+        console.log(res);
+        
+      }, (err) => {
+
+      })
+  }
+
+  getftps() {
+    this.ftp.getAllFTPs().subscribe(
+      (res: any) => {
+        console.log(res);
+        
+      }, (err) => {
+
+      })
   }
 
 
@@ -105,7 +145,7 @@ export class ParametersComponent implements OnInit {
   public closeDbModal() {
     document.getElementById('addDbModal')?.classList.add('hidden');
   }
-  
+
   public closeFtpModal() {
     document.getElementById('addFtpModal')?.classList.add('hidden');
   }
@@ -190,31 +230,31 @@ export class ParametersComponent implements OnInit {
     );
   }
 
-  public addDb(domain : any){
+  public addDb(domain: any) {
     document.getElementById('addDbModal')?.classList.remove('hidden');
   }
 
-  public addFtp(domain:any){
+  public addFtp(domain: any) {
     document.getElementById('addFtpModal')?.classList.remove('hidden');
   }
 
   submitDbForm() {
     if (this.addDbForm.valid) {
       const formData = { ...this.addDbForm.value };
-  
-      
+
+
       // Close the modal
       this.closeDbModal();
     } else {
       console.log("Database form is not valid");
     }
   }
-  
+
   submitFtpForm() {
     if (this.addFtpForm.valid) {
       const formData = { ...this.addFtpForm.value };
-  
-    
+
+
       // Close the modal
       this.closeFtpModal();
     } else {

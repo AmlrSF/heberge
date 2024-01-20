@@ -9,7 +9,7 @@ import { DomainsService } from 'src/app/services/domain/domain.service';
   styleUrls: ['./add-admin.component.css']
 })
 export class AddAdminComponent implements OnInit {
-  private baseUrl = 'http://localhost:3000/api/v1/ftps';
+  private baseUrl = 'http://localhost:3000/api/v1/CMSs';
   public addFCms!: FormGroup;
   public domains: any[] = [];
 
@@ -46,8 +46,15 @@ export class AddAdminComponent implements OnInit {
 
   submitForm(): void {
     if (this.addFCms.valid) {
-      console.log(this.addFCms.value);
       
+      this.http.post(this.baseUrl, this.addFCms.value).subscribe(
+        (res: any) => {
+          console.log('Success:', res);
+        },
+        (err: any) => {
+          console.error('Error:', err);
+        }
+      );
       
     } else {
       // Handle form validation errors
