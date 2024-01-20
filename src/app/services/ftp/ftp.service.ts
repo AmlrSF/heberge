@@ -15,6 +15,10 @@ export class FtpService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  getAllFTPsBaseOnDomain(id:string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ftp/${id}`);
+  }
+
   getSingleFTP(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

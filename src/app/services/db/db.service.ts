@@ -15,6 +15,12 @@ export class DbService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  
+  getAllDBsBaseOnDomain(id:string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/db/${id}`);
+  }
+
+
   getSingleDB(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

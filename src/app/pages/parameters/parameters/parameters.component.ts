@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
 import { ClientsService } from 'src/app/services/clients/clients.service';
 import { CmsService } from 'src/app/services/cms/cms.service';
 import { DbService } from 'src/app/services/db/db.service';
@@ -17,8 +18,8 @@ export class ParametersComponent implements OnInit {
   private baseUrl = 'http://localhost:3000/api/v1/domains';
   public addDomain !: FormGroup;
 
-  public addDbForm !: FormGroup;
-  public addFtpForm !: FormGroup;
+  // public addDbForm !: FormGroup;
+  // public addFtpForm !: FormGroup;
 
 
 
@@ -40,15 +41,37 @@ export class ParametersComponent implements OnInit {
 
   }
 
+  // Assuming you have a property to store the FTPs, DBs, and CMS data
+  public ftps: any[] = [];
+  public dbs: any[] = [];
+  public cmsData: any[] = [];
+
+  // Assuming you have a method to trigger fetching the data
+  loadDetails(id: string) {
+    this.getDbs(id).subscribe((data: any[]) => {
+      this.dbs = data;
+    });
+
+    this.getAdmin(id).subscribe((data: any[]) => {
+      this.cmsData = data;
+    });
+
+    this.getFtps(id).subscribe((data: any[]) => {
+      this.ftps = data;
+    });
+  }
+
+
   ngOnInit(): void {
     this.getDomains();
     this.clientS.getAllClients().subscribe((res: any) => {
       this.client = res.clients;
     })
 
-    // this.getDbs();
-    // this.getadmin();
-    // this.getftps();
+    //console.log("hello",this.domains);
+
+
+
 
     this.addDomain = this.fb.group({
       client: ['', Validators.required],
@@ -66,55 +89,46 @@ export class ParametersComponent implements OnInit {
   }
 
 
+  showDetails: boolean = false;
+  selectedDomain: any;
+
+  // ... existing code ...
+
+  openDomainDetails(domain: any): void {
+    this.loadDetails(domain._id);
+    this.selectedDomain = domain;
+    
+  }
+
 
   getDomains(): void {
     this.http.get(this.baseUrl).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
 
         this.domains = res.data; // Assuming res is an array of domains
 
         // Filter domains based on domain and status properties
         this.domains = this.domains.filter((domain) => domain.domain && domain.status);
-        // console.log(this.domains);
 
         this.filtereddomains = [...this.domains];
-        // console.log('domains:', this.domains);
+
       },
       (error: any) => {
         console.error('Error fetching domains:', error);
       }
     );
   }
-
-  getDbs() {
-    this.db.getAllDBs().subscribe(
-      (res: any) => {
-        console.log(res);
-        
-      }, (err) => {
-
-      })
+  getDbs(id: string): Observable<any[]> {
+    return this.db.getAllDBsBaseOnDomain(id).pipe(map((res: any) => res.db));
   }
 
-  getadmin() {
-    this.cms.getAllCMSs().subscribe(
-      (res: any) => {
-        console.log(res);
-        
-      }, (err) => {
-
-      })
+  getAdmin(id: string): Observable<any[]> {
+    return this.cms.getAllCMSsbaseOnDomain(id).pipe(map((res: any) => res.cms));
   }
 
-  getftps() {
-    this.ftp.getAllFTPs().subscribe(
-      (res: any) => {
-        console.log(res);
-        
-      }, (err) => {
-
-      })
+  getFtps(id: string): Observable<any[]> {
+    return this.ftp.getAllFTPsBaseOnDomain(id).pipe(map((res: any) => res.ftp));
   }
 
 
@@ -239,27 +253,27 @@ export class ParametersComponent implements OnInit {
   }
 
   submitDbForm() {
-    if (this.addDbForm.valid) {
-      const formData = { ...this.addDbForm.value };
+    // if (this.addDbForm.valid) {
+    //   const formData = { ...this.addDbForm.value };
 
 
-      // Close the modal
-      this.closeDbModal();
-    } else {
-      console.log("Database form is not valid");
-    }
+    //   // Close the modal
+    //   this.closeDbModal();
+    // } else {
+    //   console.log("Database form is not valid");
+    // }
   }
 
   submitFtpForm() {
-    if (this.addFtpForm.valid) {
-      const formData = { ...this.addFtpForm.value };
+    // if (this.addFtpForm.valid) {
+    //   const formData = { ...this.addFtpForm.value };
 
 
-      // Close the modal
-      this.closeFtpModal();
-    } else {
-      console.log("FTP form is not valid");
-    }
+    //   // Close the modal
+    //   this.closeFtpModal();
+    // } else {
+    //   console.log("FTP form is not valid");
+    // }
   }
 
 }

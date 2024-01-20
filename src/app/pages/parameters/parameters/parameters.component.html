@@ -41,69 +41,179 @@
 
         </div>
 
-        <!-- Table -->
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 0 ">
+        <!-- Main Table -->
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <!-- Main table headers -->
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 0">
                 <tr>
-                    <!-- Column Headers -->
+                    <th scope="col" class="text-center p-4"></th>
                     <th scope="col" class="text-center p-4">Client</th>
                     <th scope="col" class="text-center p-4">Domain Name</th>
-
-
                     <th scope="col" class="text-center p-4">Host offers</th>
-
                     <th scope="col" class="text-center p-4">Hosting</th>
                     <th scope="col" class="text-center p-4">Mail</th>
-
                     <th scope="col" class="text-center p-4">Action</th>
                 </tr>
             </thead>
+            <!-- Main table content -->
             <tbody>
-                <!-- Table Rows -->
-                <tr *ngFor="let domain of filtereddomains" class="bg-white border-b 0 hover:bg-gray-50 ">
-                    <td class="text-center p-4">{{ domain.client.name }}</td>
-                    <td class="text-center p-4">{{ domain.domainName }}</td>
+                <!-- Main table rows -->
+                <ng-container *ngFor="let domain of filtereddomains; let i = index">
+                    <tr class="bg-white border-b 0 hover:bg-gray-50">
+                        <!-- Main table cells -->
+                        <td class="text-center p-4 cursor-pointer" (click)="openDomainDetails(domain)"><i
+                                class="fa-solid text-3xl fa-caret-down"></i></td>
+                        <td class="text-center p-4">{{ domain.client.name }}</td>
+                        <td class="text-center p-4">{{ domain.domainName }}</td>
+                        <td class="text-center p-4">{{ domain.hostOvhOffer }}</td>
+                        <td class="text-center p-4">
+                            <div *ngIf="domain.hosting" class="flex items-center justify-center">
+                                <i class="fa-solid text-xl font-bold fa-check text-green-500"></i>
+                            </div>
+                            <div *ngIf="!domain.hosting" class="flex items-center justify-center">
+                                <i class="fa-solid text-xl font-bold fa-x text-red-500"></i>
+                            </div>
+                        </td>
+                        <td class="text-center p-4">
+                            <div *ngIf="domain.mail" class="flex items-center justify-center">
+                                <i class="fa-solid text-xl font-bold fa-check text-green-500"></i>
+                            </div>
+                            <div *ngIf="!domain.mail" class="flex items-center justify-center">
+                                <i class="fa-solid text-xl font-bold fa-x text-red-500"></i>
+                            </div>
+                        </td>
+                        <td class="text-center p-4 justify-center flex gap-3">
+                            <button class="p-2 rounded-lg bg-[#3C91E6]" (click)="viewDomain(domain)">
+                                <i class="text-white font-bold fa-solid fa-eye"></i>
+                            </button>
+                            <button class="p-2 rounded-lg bg-green-500" (click)="editDomain(domain)">
+                                <i class="text-white font-bold fa-solid fa-pen"></i>
+                            </button>
+                            <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteDomain(domain)">
+                                <i class="text-white font-bold fa-solid fa-trash"></i>
+                            </button>
+                            <button class="p-2 rounded-lg bg-[#FD7238]" (click)="addDb(domain)">
+                                <i class="text-white font-bold fa-solid fa-database"></i>
+                            </button>
+                            <button class="p-2 rounded-lg bg-[#FFCE26]" (click)="addFtp(domain)">
+                                <i class="text-white font-bold fa-solid fa-sliders"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Nested Table Row -->
+                    <tr *ngIf="selectedDomain._id === domain._id">
+                        <td colspan="7">
+                            <div class="flex gap-10 items-center">
 
+                                <!-- FTP Table -->
+                                <div class="flex-1">
+                                    <h1 class="text-center mb-5">FTP clients</h1>
+                                    <table class="w-full flex-1 text-sm mb-10 text-left rtl:text-right text-gray-500">
+                                        <thead class="text-xs w-full text-gray-700 uppercase bg-gray-50 0">
+                                            <tr>
+                                                <th scope="col" class="text-center p-4">Host</th>
+                                                <th scope="col" class="text-center p-4">type</th>
+                                                <th scope="col" class="text-center p-4">username</th>
+                                                <th scope="col" class="text-center p-4">password</th>
+                                                <th scope="col" class="text-center p-4">port</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let ftp of ftps">
+                                                <td class="text-center p-4">
+                                                    {{ ftp.host }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ ftp.type }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ ftp.username }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ ftp.password }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ ftp.port }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                    <td class="text-center p-4">{{ domain.hostOvhOffer }}</td>
+                                <!-- DB Table -->
+                                <div class="flex-1">
+                                    <h1 class="text-center mb-5">Databases</h1>
+                                    <table class="w-full flex-1 text-sm mb-10 text-left rtl:text-right text-gray-500 ">
 
+                                        <thead class="text-xs w-full text-gray-700 uppercase bg-gray-50 0">
+                                            <tr>
+                                                <th scope="col" class="text-center p-4">host</th>
+                                                <th scope="col" class="text-center p-4">DB name</th>
+                                                <th scope="col" class="text-center p-4">username</th>
+                                                <th scope="col" class="text-center p-4">password</th>
+                                                <th scope="col" class="text-center p-4">type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let db of dbs">
+                                                <td class="text-center p-4">
+                                                    {{ db.host }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ db.dbName }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ db.dbUsername }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ db.dbPassword }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ db.type }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                    <td class="text-center p-4">
-                        <div *ngIf="domain.hosting" class="flex items-center justify-center">
-                            <i class="fa-solid text-xl font-bold fa-check text-green-500"></i>
-                        </div>
-                        <div *ngIf="!domain.hosting" class="flex items-center justify-center">
-                            <i class="fa-solid text-xl font-bold fa-x text-red-500"></i>
-                        </div>
-                    </td>
-                    <td class="text-center p-4">
-                        <div *ngIf="domain.mail" class="flex items-center justify-center">
-                            <i class="fa-solid text-xl font-bold fa-check text-green-500"></i>
-                        </div>
-                        <div *ngIf="!domain.mail" class="flex items-center justify-center">
-                            <i class="fa-solid text-xl font-bold fa-x text-red-500"></i>
-                        </div>
-                    </td>
+                                <!-- CMS Table -->
+                                <div class="flex-1">
+                                    <h1 class="text-center mb-5">CMS</h1>
+                                    <table class="w-full flex-1 text-sm mb-10 text-left rtl:text-right text-gray-500 ">
 
+                                        <thead class="text-xs w-full  text-gray-700 uppercase bg-gray-50 0">
+                                            <tr>
+                                                <th scope="col" class="text-center p-4">username</th>
+                                                <th scope="col" class="text-center p-4">password</th>
+                                                <th scope="col" class="text-center p-4">type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let cms of cmsData">
+                                                <td class="text-center p-4">
+                                                    {{ cms.username }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ cms.password }}
+                                                </td>
+                                                <td class="text-center p-4">
+                                                    {{ cms.type }}
+                                                </td>
 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
+                            </div>
+                        </td>
+                    </tr>
 
-                    <td class="text-center p-4 justify-center flex gap-3">
-                        <button class="p-2 rounded-lg bg-[#3C91E6]" (click)="viewDomain(domain)"><i
-                                class="text-white font-bold fa-solid fa-eye"></i></button>
-                        <button class="p-2 rounded-lg bg-green-500" (click)="editDomain(domain)"><i
-                                class="text-white font-bold fa-solid fa-pen"></i></button>
-                        <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteDomain(domain)"><i
-                                class="text-white font-bold fa-solid fa-trash"></i></button>
-                        <button class="p-2 rounded-lg bg-[#FD7238]" (click)="addDb(domain)"><i
-                                class="text-white font-bold fa-solid fa-database"></i></button>
-                        <button class="p-2 rounded-lg bg-[#FFCE26]" (click)="addFtp(domain)"><i
-                                class="text-white font-bold fa-solid fa-sliders"></i></button>
-                    </td>
-                   
-                </tr>
+                </ng-container>
             </tbody>
         </table>
+
+
     </div>
 
 
@@ -249,11 +359,11 @@
     </div>
 
 
-    <div id="addDbModal" aria-hidden="true" class="backdrop-blur-sm bg-white/30 fixed top-0 left-0 right-0 z-[1000000000] items-center justify-center
+    <!-- <div id="addDbModal" aria-hidden="true" class="backdrop-blur-sm bg-white/30 fixed top-0 left-0 right-0 z-[1000000000] items-center justify-center
     hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative center-model pb-5 left-[50%] w-full max-w-2xl max-h-full">
             <form [formGroup]="addDbForm" (ngSubmit)="submitDbForm()" class="relative bg-white rounded-lg shadow-xl">
-                <!-- Modal header -->
+                
                 <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-xl  font-semibold text-gray-900 ">
                         Edit Domain
@@ -269,18 +379,18 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <!-- Add form controls here -->
+            
                 <button type="submit">Submit Database</button>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- Add FTP Form -->
-    <div id="addFtpModal" aria-hidden="true" class="backdrop-blur-sm bg-white/30 fixed top-0 left-0 right-0 z-[1000000000] items-center justify-center
+    <!-- <div id="addFtpModal" aria-hidden="true" class="backdrop-blur-sm bg-white/30 fixed top-0 left-0 right-0 z-[1000000000] items-center justify-center
         hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative center-model pb-5 left-[50%] w-full max-w-2xl max-h-full">
             <form [formGroup]="addFtpForm" (ngSubmit)="submitFtpForm()"class="relative bg-white rounded-lg shadow-xl">
-                <!-- Modal header -->
+                Modal header 
                 <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-xl  font-semibold text-gray-900 ">
                         Edit Domain
@@ -296,11 +406,11 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <!-- Add form controls here -->
+                 Add form controls here 
                 <button type="submit">Submit FTP</button>
             </form>
         </div>
-    </div>
+    </div> -->
 
 
 

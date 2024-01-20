@@ -15,9 +15,15 @@ export class CmsService {
     return this.http.get<any>(`${this.baseUrl}`);
   }
 
+  getAllCMSsbaseOnDomain(id:string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Cms/${id}`);
+  }
+
   getSingleCMS(id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
+
+
 
   postCMS(cmsData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}`, cmsData);
