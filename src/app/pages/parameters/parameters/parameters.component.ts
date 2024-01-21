@@ -18,9 +18,9 @@ export class ParametersComponent implements OnInit {
   private baseUrl = 'http://localhost:3000/api/v1/domains';
   public addDomain !: FormGroup;
 
-  // public addDbForm !: FormGroup;
-  // public addFtpForm !: FormGroup;
-
+  public addDbForm !: FormGroup;
+  public addFtpForm !: FormGroup;
+  public addAdminForm !:FormGroup;
 
 
   private id: string = "";
@@ -41,12 +41,11 @@ export class ParametersComponent implements OnInit {
 
   }
 
-  // Assuming you have a property to store the FTPs, DBs, and CMS data
+
   public ftps: any[] = [];
   public dbs: any[] = [];
   public cmsData: any[] = [];
 
-  // Assuming you have a method to trigger fetching the data
   loadDetails(id: string) {
     this.getDbs(id).subscribe((data: any[]) => {
       this.dbs = data;
@@ -64,13 +63,38 @@ export class ParametersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDomains();
+
     this.clientS.getAllClients().subscribe((res: any) => {
       this.client = res.clients;
     })
 
     //console.log("hello",this.domains);
 
+    this.addFtpForm = this.fb.group({
+      domain: ['', Validators.required],
+      type: ['', Validators.required],
+      host: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      port: ['', Validators.required],
+    });
 
+    this.addDbForm = this.fb.group({
+      domain: ['', Validators.required],
+      host: ['', Validators.required],
+      dbName: ['', Validators.required],
+      dbPassword: ['', Validators.required],
+      type: ['', Validators.required],
+      dbUsername: ['', Validators.required],
+    });
+
+
+    this.addAdminForm = this.fb.group({
+      domain: ['', Validators.required],
+      type: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
 
 
     this.addDomain = this.fb.group({
@@ -97,7 +121,7 @@ export class ParametersComponent implements OnInit {
   openDomainDetails(domain: any): void {
     this.loadDetails(domain._id);
     this.selectedDomain = domain;
-    
+    this.showDetails = !this.showDetails;
   }
 
 
@@ -119,6 +143,8 @@ export class ParametersComponent implements OnInit {
       }
     );
   }
+
+
   getDbs(id: string): Observable<any[]> {
     return this.db.getAllDBsBaseOnDomain(id).pipe(map((res: any) => res.db));
   }
@@ -162,6 +188,10 @@ export class ParametersComponent implements OnInit {
 
   public closeFtpModal() {
     document.getElementById('addFtpModal')?.classList.add('hidden');
+  }
+
+  public closeAdminModal() {
+    document.getElementById('addAdminModal')?.classList.add('hidden');
   }
 
   // Function to edit a Domain
@@ -228,7 +258,6 @@ export class ParametersComponent implements OnInit {
     })
   }
 
-
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
     console.log(filterValue);
@@ -251,6 +280,12 @@ export class ParametersComponent implements OnInit {
   public addFtp(domain: any) {
     document.getElementById('addFtpModal')?.classList.remove('hidden');
   }
+
+  public addAdmin(domain: any) {
+    document.getElementById('addAdminModal')?.classList.remove('hidden');
+  }
+
+
 
   submitDbForm() {
     // if (this.addDbForm.valid) {
@@ -276,4 +311,7 @@ export class ParametersComponent implements OnInit {
     // }
   }
 
+  submitAdminForm(){
+    
+  }
 }
