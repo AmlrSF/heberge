@@ -104,15 +104,6 @@
                             <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteDomain(domain)">
                                 <i class="text-white font-bold fa-solid fa-trash"></i>
                             </button>
-                            <button class="p-2 rounded-lg bg-[#FD7238]" (click)="addDb(domain)">
-                                <i class="text-white font-bold fa-solid fa-database"></i>
-                            </button>
-                            <button class="p-2 rounded-lg bg-[#FFCE26]" (click)="addFtp(domain)">
-                                <i class="text-white font-bold fa-solid fa-sliders"></i>
-                            </button>
-                            <button class="p-2 rounded-lg bg-[#ff26c2]" (click)="addAdmin(domain)">
-                                <i class="text-white font-bold fa-solid fa-user-tie"></i>
-                            </button>
                         </td>
                     </tr>
                     <!-- Nested Table Row -->
@@ -131,6 +122,7 @@
                                                 <th scope="col" class="text-center p-4">username</th>
                                                 <th scope="col" class="text-center p-4">password</th>
                                                 <th scope="col" class="text-center p-4">port</th>
+                                                <th scope="col" class="text-cnter p-4">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,6 +142,18 @@
                                                 <td class="text-center p-4">
                                                     {{ ftp.port }}
                                                 </td>
+                                                <td class="flex gap-1 justify-center items-center text-center p-4">
+
+                                                                                    
+                                                    <button class="p-2 rounded-lg bg-green-500" (click)="addFtp(ftp,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteFTP(ftp,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-trash"></i>
+                                                    </button>
+
+
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -167,6 +171,7 @@
                                                 <th scope="col" class="text-center p-4">username</th>
                                                 <th scope="col" class="text-center p-4">password</th>
                                                 <th scope="col" class="text-center p-4">type</th>
+                                                <th scope="col" class="text-center p-4">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -186,6 +191,17 @@
                                                 <td class="text-center p-4">
                                                     {{ db.type }}
                                                 </td>
+                                                <td class="flex gap-1 justify-center items-center text-center p-4">
+                                                   
+                                                    <button class="p-2 rounded-lg bg-green-500" (click)="addDb(db,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteDB(db,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-trash"></i>
+                                                    </button>
+
+                                                </td>
+
                                             </tr>
                                         </tbody>
                                     </table>
@@ -201,6 +217,8 @@
                                                 <th scope="col" class="text-center p-4">username</th>
                                                 <th scope="col" class="text-center p-4">password</th>
                                                 <th scope="col" class="text-center p-4">type</th>
+                                                <th scope="col" class="text-center p-4">Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -213,6 +231,16 @@
                                                 </td>
                                                 <td class="text-center p-4">
                                                     {{ cms.type }}
+                                                </td>
+                                                <td class="text-center p-4 flex gap-1 justify-center items-center">
+                                                                                    
+                                                    <button class="p-2 rounded-lg bg-green-500" (click)="addAdmin(cms,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="p-2 rounded-lg bg-[#DB504A]" (click)="deleteAdmin(cms,domain._id)">
+                                                        <i class="text-white font-bold fa-solid fa-trash"></i>
+                                                    </button>
+
                                                 </td>
 
                                             </tr>
@@ -395,7 +423,7 @@
                     </button>
                 </div>
 
-                <div class="max-w-lg mx-auto">
+                <div class="max-w-lg mx-auto my-10">
                     <h1 class="text-3xl mb-7 text-center">New DB</h1>
 
                     <div class="mb-2">
@@ -441,7 +469,7 @@
                     </div>
 
                     <button type="submit"
-                        class="text-white w-full bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white w-full mb-10 bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         New DB
                     </button>
                 </div>
@@ -470,7 +498,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <div class="max-w-lg mx-auto">
+                <div class="max-w-lg my-10 mx-auto">
                     <h1 class="text-3xl mb-7 text-center">New FTP</h1>
 
                     <div class="mb-2">
@@ -520,7 +548,7 @@
                     </div>
 
                     <button type="submit"
-                        class="text-white w-full bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="text-white w-full mb-10 bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         New FTP
                     </button>
                 </div>
@@ -532,7 +560,8 @@
     <div id="addAdminModal" aria-hidden="true" class="backdrop-blur-sm bg-white/30 fixed top-0 left-0 right-0 z-[1000000000] items-center justify-center
     hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative center-model pb-5 left-[50%] w-full max-w-2xl max-h-full">
-            <form [formGroup]="addAdminForm" (ngSubmit)="submitAdminForm()" class="relative bg-white rounded-lg shadow-xl">
+            <form [formGroup]="addAdminForm" (ngSubmit)="submitAdminForm()"
+                class="relative bg-white rounded-lg shadow-xl">
 
                 <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-xl  font-semibold text-gray-900 ">
@@ -550,53 +579,51 @@
                     </button>
                 </div>
 
-                <div class="max-w-lg mx-auto">
+                <div class="max-w-lg my-10 mx-auto">
                     <h1 class="text-3xl mb-7 text-center">edit admin</h1>
-              
+
                     <div class="mb-2">
-                      <label for="domain" class="block mb-2 text-sm font-medium text-gray-900">Domain</label>
-                      <div>
-                        <select id="domain" formControlName="domain"
-                          class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                          <option *ngFor="let d of domains" [value]="d._id">{{ d.domainName }}</option>
-                        </select>
-                      </div>
+                        <label for="domain" class="block mb-2 text-sm font-medium text-gray-900">Domain</label>
+                        <div>
+                            <select id="domain" formControlName="domain"
+                                class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option *ngFor="let d of domains" [value]="d._id">{{ d.domainName }}</option>
+                            </select>
+                        </div>
                     </div>
-        
+
                     <div class="mb-2">
-                      <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
-                      <div>
-                        <select id="type" formControlName="type"
-                          class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                          <option value="Wordpress">Wordpress</option>
-                          <option value="Shopify">Shopify</option>
-                          <option value="other">other</option>
-                        </select>
-                      </div>
+                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
+                        <div>
+                            <select id="type" formControlName="type"
+                                class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="Wordpress">Wordpress</option>
+                                <option value="Shopify">Shopify</option>
+                                <option value="other">other</option>
+                            </select>
+                        </div>
                     </div>
-          
-              
+
+
                     <div class="mb-2">
-                      <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username</label>
-                      <input type="text" id="username" formControlName="username"
-                        class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg
+                        <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username</label>
+                        <input type="text" id="username" formControlName="username" class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg
                                  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
-              
+
                     <div class="mb-2">
-                      <label for="password" class="block mb-1 text-sm font-medium text-gray-900">Password</label>
-                      <input type="password" id="password" formControlName="password"
-                        class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg
+                        <label for="password" class="block mb-1 text-sm font-medium text-gray-900">Password</label>
+                        <input type="password" id="password" formControlName="password" class="shadow-sm bg-gray-50 border-2 border-gray-300 focus:outline-none text-gray-900 text-sm rounded-lg
                                  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
-              
-        
-              
+
+
+
                     <button type="submit"
-                      class="text-white w-full bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      New CMS
+                        class="text-white mb-10 w-full bg-blue-700 hover:bg-blue--2800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        New CMS
                     </button>
-                  </div>
+                </div>
             </form>
         </div>
     </div>

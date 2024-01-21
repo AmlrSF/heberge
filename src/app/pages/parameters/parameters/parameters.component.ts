@@ -16,6 +16,14 @@ import { FtpService } from 'src/app/services/ftp/ftp.service';
 })
 export class ParametersComponent implements OnInit {
   private baseUrl = 'http://localhost:3000/api/v1/domains';
+  private apiUrlDB = 'http://localhost:3000/api/v1/dbs';
+  private apiUrlFtps = 'http://localhost:3000/api/v1/ftps';
+  private apiUrlCms = 'http://localhost:3000/api/v1/CMSs';
+
+  private idCms:string = "";
+  private idFtp :string = "";
+  private idDb :string = "";
+
   public addDomain !: FormGroup;
 
   public addDbForm !: FormGroup;
@@ -123,6 +131,9 @@ export class ParametersComponent implements OnInit {
     this.selectedDomain = domain;
     this.showDetails = !this.showDetails;
   }
+
+
+
 
 
   getDomains(): void {
@@ -273,45 +284,113 @@ export class ParametersComponent implements OnInit {
     );
   }
 
-  public addDb(domain: any) {
+  public addDb(db: any,id: string) {
+    this.addDbForm.patchValue({
+      domain: id,
+      host: db.host,
+      dbName: db.dbName,
+      dbPassword: db.dbPassowrd,
+      type: db.type,
+      dbUsername: db.dbUsername,
+    })
     document.getElementById('addDbModal')?.classList.remove('hidden');
   }
 
-  public addFtp(domain: any) {
+  public addFtp(ftp: any,id: string) {
+    this.addFtpForm.patchValue({
+      domain: id,
+      type: ftp.type,
+      host: ftp.host,
+      username: ftp.username,
+      password: ftp.password,
+      port: ftp.port,
+    })
     document.getElementById('addFtpModal')?.classList.remove('hidden');
   }
 
-  public addAdmin(domain: any) {
+  public addAdmin(admin: any,id: string) {
+    this.addAdminForm.patchValue({
+      domain: id,
+      type: admin.type,
+      username: admin.username,
+      password: admin.password,
+    });
+
     document.getElementById('addAdminModal')?.classList.remove('hidden');
   }
 
+  deleteDB(db:any,id:string){
+    this.db.deleteSingleDB(db._id).subscribe((res:any)=>{
+      console.log(res);
+      this.loadDetails(id)
+    },(err)=>{
+      console.log(err);
+      
+    })
+  }
+
+  deleteFTP(ftp:any,id:string){
+    this.ftp.deleteSingleFTP(ftp._id)
+      .subscribe((res)=>{
+        console.log(res);
+        this.loadDetails(id);
+      },(err)=>{
+        console.log(err)
+      })
+  }
+
+  deleteAdmin(admin:any,id:string){
+    this.cms.deleteSingleCMS(admin._id)
+    .subscribe((res)=>{
+      console.log(res);
+      this.loadDetails(id);
+    },(err)=>{
+      console.log(err)
+    })
+  }
 
 
   submitDbForm() {
-    // if (this.addDbForm.valid) {
-    //   const formData = { ...this.addDbForm.value };
+    if (this.addDbForm.valid) {
+      const formData = { ...this.addDbForm.value };
 
+   
+      
 
-    //   // Close the modal
-    //   this.closeDbModal();
-    // } else {
-    //   console.log("Database form is not valid");
-    // }
+      // Close the modal
+      this.closeDbModal();
+    } else {
+      console.log("Database form is not valid");
+    }
   }
 
   submitFtpForm() {
-    // if (this.addFtpForm.valid) {
-    //   const formData = { ...this.addFtpForm.value };
+    if (this.addFtpForm.valid) {
+      const formData = { ...this.addFtpForm.value };
 
 
-    //   // Close the modal
-    //   this.closeFtpModal();
-    // } else {
-    //   console.log("FTP form is not valid");
-    // }
+   
+
+
+      // Close the modal
+      this.closeFtpModal();
+    } else {
+      console.log("FTP form is not valid");
+    }
   }
 
   submitAdminForm(){
-    
+    if (this.addAdminForm.valid) {
+      const formData = { ...this.addAdminForm.value };
+
+
+   
+
+
+      // Close the modal
+      this.closeAdminModal();
+    } else {
+      console.log("FTP form is not valid");
+    }
   }
 }

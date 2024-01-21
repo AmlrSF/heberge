@@ -50,6 +50,7 @@ export class AddAdminComponent implements OnInit {
       this.http.post(this.baseUrl, this.addFCms.value).subscribe(
         (res: any) => {
           console.log('Success:', res);
+          this.addFCms.reset();
         },
         (err: any) => {
           console.error('Error:', err);

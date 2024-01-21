@@ -16,7 +16,7 @@ export class CmsService {
   }
 
   getAllCMSsbaseOnDomain(id:string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/Cms/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/cms/${id}`);
   }
 
   getSingleCMS(id: string): Observable<any> {

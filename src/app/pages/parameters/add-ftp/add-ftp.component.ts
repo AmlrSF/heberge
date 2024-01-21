@@ -53,6 +53,8 @@ export class AddFtpComponent  implements OnInit {
       this.http.post(this.baseUrl, this.addFtp.value).subscribe(
         (res: any) => {
           console.log('Success:', res);
+
+          this.addFtp.reset();
         },
         (err: any) => {
           console.error('Error:', err);
