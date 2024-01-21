@@ -23,7 +23,7 @@ export class ParametersComponent implements OnInit {
   private idCms:string = "";
   private idFtp :string = "";
   private idDb :string = "";
-
+  private idDomain:string ="";
   public addDomain !: FormGroup;
 
   public addDbForm !: FormGroup;
@@ -292,7 +292,10 @@ export class ParametersComponent implements OnInit {
       dbPassword: db.dbPassowrd,
       type: db.type,
       dbUsername: db.dbUsername,
-    })
+    });
+
+    this.idDb = db._id;
+    this.idDomain = id;
     document.getElementById('addDbModal')?.classList.remove('hidden');
   }
 
@@ -305,6 +308,8 @@ export class ParametersComponent implements OnInit {
       password: ftp.password,
       port: ftp.port,
     })
+    this.idFtp = ftp._id;
+    this.idDomain = id;
     document.getElementById('addFtpModal')?.classList.remove('hidden');
   }
 
@@ -316,6 +321,8 @@ export class ParametersComponent implements OnInit {
       password: admin.password,
     });
 
+    this.idCms = admin._id;
+    this.idDomain = id;
     document.getElementById('addAdminModal')?.classList.remove('hidden');
   }
 
@@ -355,6 +362,13 @@ export class ParametersComponent implements OnInit {
       const formData = { ...this.addDbForm.value };
 
    
+      this.http.put(`${this.apiUrlDB}/${this.idDb}`,formData).subscribe((res:any)=>{
+        console.log(res);
+        this.loadDetails(this.idDomain);
+      },(err:any)=>{
+        console.log(err);
+        
+      })
       
 
       // Close the modal
@@ -370,6 +384,14 @@ export class ParametersComponent implements OnInit {
 
 
    
+      this.http.put(`${this.apiUrlFtps}/${this.idFtp}`,formData).subscribe((res:any)=>{
+        console.log(res);
+        this.loadDetails(this.idDomain);
+      },(err:any)=>{
+        console.log(err);
+        
+      })
+      
 
 
       // Close the modal
@@ -384,6 +406,14 @@ export class ParametersComponent implements OnInit {
       const formData = { ...this.addAdminForm.value };
 
 
+      this.http.put(`${this.apiUrlCms}/${this.idCms}`,formData).subscribe((res:any)=>{
+        console.log(res);
+        this.loadDetails(this.idDomain);
+      },(err:any)=>{
+        console.log(err);
+        
+      })
+      
    
 
 

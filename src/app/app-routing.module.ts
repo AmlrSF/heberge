@@ -12,8 +12,11 @@ const routes: Routes = [
   {
     path: "admin",
     loadChildren: () => import("./dashboard/dashboard.module").then(m => m.DashboardModule)
-  },
-  { path: "", redirectTo: "/Login", pathMatch: "full" }
+  },{
+    path: "",
+    loadChildren: ()=>import("./site/site.module").then(m=>m.SiteModule)
+  }
+  
 ];
 
 
