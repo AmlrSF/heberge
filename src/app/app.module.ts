@@ -12,6 +12,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { SiteLayoutComponent } from './site/site-layout/site-layout.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { HomePageComponent } from './site-pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     LoginComponent,
     RegisterComponent,
     SiteLayoutComponent,
+    HomePageComponent,
+    
   ],
   imports: [
     BrowserModule,
