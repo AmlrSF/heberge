@@ -37,22 +37,23 @@
             </span>
         </li>
     </ul>
-    <div>
-        <table class="styled-table">
-            <thead>
+    <div class="bg-[#F9F9F9] p-[24px] rounded-[20px] mt-7">
+        <h2 class="text-2xl font-bold">Monthly Metrics Overview.</h2>
+        <table class="styled-table text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th>Months</th>
-                    <th *ngFor="let data of monthlyData">{{ data.month }}</th>
+                    <th scope="col" class="text-center p-4" >Months</th>
+                    <th scope="col" class="text-center  p-4"  *ngFor="let data of monthlyData">{{ data.month }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Number of Domains</td>
-                    <td *ngFor="let data of monthlyData">{{ data.numberOfDomains }}</td>
+                <tr class="bg-white border-b 0 hover:bg-gray-50 ">
+                    <td scope="col" class="text-center p-4">Number of Domains</td>
+                    <td scope="col" class="text-center p-4" *ngFor="let data of monthlyData">{{ data.numberOfDomains }}</td>
                 </tr>
-                <tr>
-                    <td>Profit</td>
-                    <td *ngFor="let data of monthlyData">{{ data.profit | currency:'USD':true }}</td>
+                <tr class="bg-white border-b 0 hover:bg-gray-50 ">
+                    <td scope="col" class="text-center p-4">Profit</td>
+                    <td scope="col" class="text-center p-4" *ngFor="let data of monthlyData">{{ data.profit | currency:'USD':true }}</td>
                 </tr>
             </tbody>
         </table>
