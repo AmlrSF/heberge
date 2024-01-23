@@ -13,6 +13,8 @@ import { SiteLayoutComponent } from './site/site-layout/site-layout.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { HomePageComponent } from './site-pages/home-page/home-page.component';
+import { SiteNavbarComponent } from './shared/site-navbar/site-navbar.component';
+import { SiteFooterComponent } from './shared/site-footer/site-footer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { HomePageComponent } from './site-pages/home-page/home-page.component';
     RegisterComponent,
     SiteLayoutComponent,
     HomePageComponent,
+    SiteNavbarComponent,
+    SiteFooterComponent,
     
   ],
   imports: [
