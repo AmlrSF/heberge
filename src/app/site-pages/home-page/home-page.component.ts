@@ -1,12 +1,38 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit{
+
+
+ 
+  clients: number = 0;
+  projects: number = 0;
+  countries: number = 0;
+  money: number = 0;
+
+  ngOnInit() {
+    // Simulate fetching data from an API or other source
+    this.startUpdatingStats();
+  }
+
+  startUpdatingStats() {
+    // Update the statistics at regular intervals
+    setInterval(() => {
+      // Simulate an API call to get the updated statistics
+      // Replace this with your actual API call logic
+      this.clients = Math.min(this.clients + 1, 150);
+      this.projects = Math.min(this.projects + 1, 135);
+      this.countries = Math.min(this.countries + 1, 50);
+      this.money = Math.min(this.money + 1, 500);
+    }, 1); // Update every 1000 milliseconds (1 second)
+  }
+
+
   private baseUrm = "https://sandbox.paymee.tn/api/v2/payments/create";
 
   private formData = {

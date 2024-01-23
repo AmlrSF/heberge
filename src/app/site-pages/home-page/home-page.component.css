@@ -569,7 +569,7 @@
 .pricing .box img {
   width: 80px;
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .pricing .box .price {
   margin-bottom: 20px;
@@ -588,7 +588,7 @@
   text-align: left;
 }
 .pricing .box ul li {
-  padding: 20px;
+  padding: 15px;
   border-top: 1px solid #eee;
 }
 .pricing .box ul li::before {
