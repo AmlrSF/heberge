@@ -444,7 +444,8 @@
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding-bottom);
   position: relative;
-  background-color: var(--section-background);
+  background-color: #fff;
+  /* background-color: var(--section-background); */
 }
 
 .testimonials .container {
@@ -931,7 +932,8 @@
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding-bottom);
   position: relative;
-  background-color: white;
+  /* background-color: white; */
+  background-color: var(--section-background);
 }
 
 .services .container {
