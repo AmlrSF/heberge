@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthUserService } from 'src/app/services/auth/auth-user.service';
+// import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-register',
