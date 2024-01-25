@@ -108,7 +108,7 @@ export class ListClientsComponent implements OnInit {
 
   // Function to delete a client
   deleteClient(client: any): void {
-    this.clientsService.deleteClient(client._id).subscribe((res:any)=>{
+    this.http.delete(`${this.apiUrl}/Client/${client._id}`).subscribe((res:any)=>{
       console.log(res);
       this.getClients();
     })
